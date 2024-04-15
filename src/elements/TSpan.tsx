@@ -14,7 +14,7 @@ import type {
   NumberProp,
 } from '../lib/extract/types';
 import RNSVGTSpan from '../fabric/TSpanNativeComponent';
-
+import { decode } from 'he';
 export interface TSpanProps extends CommonPathProps, FontProps {
   children?: TextChild;
   x?: NumberArray;
@@ -55,7 +55,10 @@ export default class TSpan extends Shape<TSpanProps> {
     );
     Object.assign(props, extractText(prop, false));
     props.ref = this.refMethod as (instance: Component | null) => void;
-    return <RNSVGTSpan {...props} />;
+    console.log('TSpan props:', props.content)
+    const content = decode(props.content as string);
+    const newProps = {...props, content};
+    return <RNSVGTSpan {...newProps } />;
   }
 }
 
