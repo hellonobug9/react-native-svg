@@ -55,10 +55,9 @@ export default class TSpan extends Shape<TSpanProps> {
     );
     Object.assign(props, extractText(prop, false));
     props.ref = this.refMethod as (instance: Component | null) => void;
-    console.log('TSpan props:', props.content)
-    const content = decode(props.content as string);
-    const newProps = {...props, content};
-    return <RNSVGTSpan {...newProps } />;
+    const content = typeof props.content === 'string' ? decode(props.content) : undefined;
+    const finalProps = {...props, content};
+    return <RNSVGTSpan {...finalProps } />;
   }
 }
 
